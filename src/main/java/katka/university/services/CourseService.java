@@ -6,6 +6,8 @@ import katka.university.entities.Course;
 
 public interface CourseService {
 
+  Course createCourse(Course course);
+
   List<Course> searchWithRelationShip(Predicate predicate);
 
 

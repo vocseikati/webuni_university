@@ -1,5 +1,6 @@
 package katka.university.entities;
 
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -9,11 +10,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -23,4 +24,10 @@ public class Student extends Person{
 
   @ManyToMany(mappedBy = "students")
   private Set<Course> courses;
+
+  @Builder
+  public Student(int id, String name, LocalDate birthdate, int semester) {
+    super(id, name, birthdate);
+    this.semester = semester;
+  }
 }

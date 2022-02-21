@@ -15,6 +15,7 @@ import lombok.ToString;
 
 @MappedSuperclass
 @Data
+//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
