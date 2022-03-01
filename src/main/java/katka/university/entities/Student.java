@@ -3,6 +3,9 @@ package katka.university.entities;
 import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +13,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ToString
-public class Student extends Person{
+public class Student extends Person {
 
   private int semester;
 

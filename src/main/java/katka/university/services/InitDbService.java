@@ -11,16 +11,19 @@ import katka.university.repositories.CourseRepository;
 import katka.university.repositories.StudentRepository;
 import katka.university.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
 @Service
 public class InitDbService {
 
-  private final CourseRepository courseRepository;
-  private final StudentRepository studentRepository;
-  private final TeacherRepository teacherRepository;
+  @Autowired
+  private CourseRepository courseRepository;
+  @Autowired
+  private StudentRepository studentRepository;
+  @Autowired
+  private TeacherRepository teacherRepository;
 
   @Transactional
   public void deleteDb() {
@@ -32,15 +35,16 @@ public class InitDbService {
 
   @Transactional
   public void addInitData() {
-    Student student1 = saveNewStudent("student1", LocalDate.of(2000, 10, 10), 1, 111);
-    Student student2 = saveNewStudent("student2", LocalDate.of(2000, 10, 10), 2, 222);
-    Student student3 = saveNewStudent("student3", LocalDate.of(2000, 10, 10), 3, 333);
+    Student student1 = saveNewStudent(LocalDate.of(2000, 10, 10),"student1",  1);
+    Student student2 = saveNewStudent(LocalDate.of(2000, 10, 10),"student2",  2);
+    Student student3 = saveNewStudent(LocalDate.of(2000, 10, 10), "student3", 3);
 
     Teacher teacher1 = saveNewTeacher("teacher1", LocalDate.of(2000, 10, 10));
     Teacher teacher2 = saveNewTeacher("teacher2", LocalDate.of(2000, 10, 10));
     Teacher teacher3 = saveNewTeacher("teacher3", LocalDate.of(2000, 10, 10));
 
-    createCourse("course1", Arrays.asList(teacher1, teacher2), Arrays.asList(student1, student2, student3));
+    createCourse("course1", Arrays.asList(teacher1, teacher2),
+        Arrays.asList(student1, student2, student3));
     createCourse("course2", Arrays.asList(teacher2), Arrays.asList(student1, student3));
     createCourse("course3", Arrays.asList(teacher1, teacher3), Arrays.asList(student2, student3));
   }
@@ -54,11 +58,11 @@ public class InitDbService {
             .build());
   }
 
-  private Student saveNewStudent(String name, LocalDate birthdate, int semester, int eduId) {
+  private Student saveNewStudent(LocalDate birthdate, String name, int semester) {
     return studentRepository.save(
         Student.builder()
-            .name(name)
             .birthdate(birthdate)
+            .name(name)
             .semester(semester)
             .build());
   }

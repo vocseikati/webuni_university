@@ -23,7 +23,7 @@ import lombok.ToString;
 public abstract class Person {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @ToString.Include
   @EqualsAndHashCode.Include
   private int id;

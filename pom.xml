@@ -14,7 +14,7 @@
     <name>university</name>
     <description>University project</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
@@ -45,11 +45,18 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
         </dependency>
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-hibernate-cache-v53</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-spring5-embedded</artifactId>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
