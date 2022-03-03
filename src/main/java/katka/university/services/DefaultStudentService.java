@@ -19,7 +19,7 @@ public class DefaultStudentService implements StudentService{
   private CentralEducationSystemService educationSystemService;
 
   @Override
-  @Scheduled(cron = "${university.freeSemesterUpdater.cron}")
+//  @Scheduled(cron = "${university.freeSemesterUpdater.cron}")
   public void updateFreeSemesters() {
     List<Student> students = studentRepository.findAll();
     students.forEach(student -> {

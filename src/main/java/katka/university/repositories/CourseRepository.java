@@ -1,6 +1,5 @@
 package katka.university.repositories;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringExpression;
 import java.util.Iterator;
 import java.util.List;
@@ -37,5 +36,6 @@ public interface CourseRepository
       return Optional.of(path.between(from, to));
     }));
   }
+
 
 }

@@ -10,8 +10,8 @@ import katka.university.entities.Teacher;
 import katka.university.repositories.CourseRepository;
 import katka.university.repositories.StudentRepository;
 import katka.university.repositories.TeacherRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +24,24 @@ public class InitDbService {
   private StudentRepository studentRepository;
   @Autowired
   private TeacherRepository teacherRepository;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @Transactional
   public void deleteDb() {
-
     courseRepository.deleteAll();
     studentRepository.deleteAll();
     teacherRepository.deleteAll();
+  }
+
+  @Transactional
+  public void deleteAudTables(){
+    jdbcTemplate.update("DELETE FROM course_aud");
+    jdbcTemplate.update("DELETE FROM course_students_aud");
+    jdbcTemplate.update("DELETE FROM course_teachers_aud");
+    jdbcTemplate.update("DELETE FROM student_aud");
+    jdbcTemplate.update("DELETE FROM teacher_aud");
+    jdbcTemplate.update("DELETE FROM revinfo");
   }
 
   @Transactional

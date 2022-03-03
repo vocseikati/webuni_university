@@ -2,10 +2,18 @@ package katka.university.services;
 
 import com.querydsl.core.types.Predicate;
 import java.util.List;
+import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import katka.university.entities.Course;
+import katka.university.entities.HistoryData;
 import katka.university.entities.QCourse;
 import katka.university.repositories.CourseRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.DefaultRevisionEntity;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +27,9 @@ public class DefaultCourseService implements CourseService {
 
   @Autowired
   private CourseRepository courseRepository;
+
+  @Autowired
+  private EntityManager entityManager;
 
   @Override
   public Course createCourse(Course course) {
@@ -47,5 +58,51 @@ public class DefaultCourseService implements CourseService {
   @Override
   public List<Course> getAll() {
     return courseRepository.findAll();
+  }
+
+  @Transactional
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  public List<HistoryData<Course>> getCourseHistory(int id) {
+    return AuditReaderFactory.get(entityManager)
+        .createQuery()
+        .forRevisionsOfEntity(Course.class, false, true)
+        .add(AuditEntity.property("id").eq(id))
+        .getResultList()
+        .stream()
+        .map(o -> {
+          Object[] objArray = (Object[]) o;
+          DefaultRevisionEntity revisionEntity = (DefaultRevisionEntity) objArray[1];
+          Course course = (Course) objArray[0];
+          course.getStudents().size();
+          course.getTeachers().size();
+          return new HistoryData<>(
+              course,
+              (RevisionType) objArray[2],
+              revisionEntity.getId(),
+              revisionEntity.getRevisionDate()
+          );
+        }).toList();
+  }
+
+  @Override
+  @Transactional
+  public Course modifyCourse(Course course, int courseId) {
+    Course originalCourse = getCourse(courseId);
+    if (originalCourse.getTeachers() != null){
+      course.setTeachers(originalCourse.getTeachers());
+    }
+    if (originalCourse.getStudents() != null){
+      course.setStudents(originalCourse.getStudents());
+    }
+    course.setId(courseId);
+    return courseRepository.save(course);
+  }
+
+  private Course getCourse(int courseId) {
+    Optional<Course> byId = courseRepository.findById(courseId);
+    if (byId.isEmpty()){
+      throw new EntityNotFoundException("There is no course with the provided id.");
+    }
+    return byId.get();
   }
 }
