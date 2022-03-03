@@ -2,15 +2,14 @@ package katka.university.services;
 
 import com.querydsl.core.types.Predicate;
 import java.util.List;
-import java.util.Optional;
 import katka.university.entities.Course;
 import katka.university.entities.QCourse;
 import katka.university.repositories.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +27,7 @@ public class DefaultCourseService implements CourseService {
 
   @Override
   @Transactional
+  @Cacheable("courseSearchResults")
   public List<Course> searchWithRelationShips(Predicate predicate, Pageable pageable) {
 //    courses = courseRepository.findAll(predicate, "Course.students");
 //    courses = courseRepository.findAll(QCourse.course.in(courses), "Course.teachers");

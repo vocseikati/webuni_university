@@ -32,4 +32,8 @@ public class Student extends Person {
     super(id, name, birthdate);
     this.semester = semester;
   }
+
+  private Integer educationalId;
+  private Integer freeSemesterNumber;
+
 }
