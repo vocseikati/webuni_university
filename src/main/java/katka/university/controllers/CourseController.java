@@ -1,5 +1,6 @@
 package katka.university.controllers;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.querydsl.core.types.Predicate;
@@ -80,4 +81,9 @@ public class CourseController {
     }
     return courseDtosWithHistory;
   }
+
+  @GetMapping(value = "/{id}/versions")
+	public CourseDto getVersionAt(@PathVariable int id, @RequestParam OffsetDateTime at){
+		return courseMapper.courseToDto(courseService.getVersionAtById(id, at));
+	}
 }

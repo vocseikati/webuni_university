@@ -1,6 +1,7 @@
 package katka.university.services;
 
 import com.querydsl.core.types.Predicate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import katka.university.entities.Course;
 import katka.university.entities.HistoryData;
@@ -19,4 +20,6 @@ public interface CourseService {
   List<HistoryData<Course>> getCourseHistory(int id);
 
   Course modifyCourse(Course course, int courseId);
+
+  Course getVersionAtById(int id, OffsetDateTime when);
 }

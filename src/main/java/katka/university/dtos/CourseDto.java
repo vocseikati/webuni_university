@@ -1,7 +1,6 @@
 package katka.university.dtos;
 
 import java.util.List;
-import java.util.Set;
 import lombok.Data;
 
 @Data

@@ -1,6 +1,7 @@
 package katka.university.services;
 
 import com.querydsl.core.types.Predicate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -60,6 +61,20 @@ public class DefaultCourseService implements CourseService {
     return courseRepository.findAll();
   }
 
+  @Override
+  @Transactional
+  public Course modifyCourse(Course course, int courseId) {
+    Course originalCourse = getCourse(courseId);
+    if (originalCourse.getTeachers() != null){
+      course.setTeachers(originalCourse.getTeachers());
+    }
+    if (originalCourse.getStudents() != null){
+      course.setStudents(originalCourse.getStudents());
+    }
+    course.setId(courseId);
+    return courseRepository.save(course);
+  }
+
   @Transactional
   @SuppressWarnings({"rawtypes", "unchecked"})
   public List<HistoryData<Course>> getCourseHistory(int id) {
@@ -84,18 +99,25 @@ public class DefaultCourseService implements CourseService {
         }).toList();
   }
 
-  @Override
   @Transactional
-  public Course modifyCourse(Course course, int courseId) {
-    Course originalCourse = getCourse(courseId);
-    if (originalCourse.getTeachers() != null){
-      course.setTeachers(originalCourse.getTeachers());
+  @SuppressWarnings("rawtypes")
+  public Course getVersionAtById(int id, OffsetDateTime when){
+    long epochMilli = when.toInstant().toEpochMilli();
+    List resultList = AuditReaderFactory.get(entityManager)
+        .createQuery()
+        .forRevisionsOfEntity(Course.class, true, false)
+        .add(AuditEntity.property("id").eq(id))
+        .add(AuditEntity.revisionProperty("timestamp").le(epochMilli))
+        .addOrder(AuditEntity.revisionProperty("timestamp").desc())
+        .setMaxResults(1)
+        .getResultList();
+    if (!resultList.isEmpty()){
+      Course course = (Course) resultList.get(0);
+      course.getStudents().size();
+      course.getTeachers().size();
+      return course;
     }
-    if (originalCourse.getStudents() != null){
-      course.setStudents(originalCourse.getStudents());
-    }
-    course.setId(courseId);
-    return courseRepository.save(course);
+    return null;
   }
 
   private Course getCourse(int courseId) {
