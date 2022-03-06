@@ -3,21 +3,21 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: 'http://localhost:8080'
+    description: Generated server url
 paths:
-  /api/courses/{id}:
+  '/api/courses/{id}':
     put:
       tags:
-      - course-controller
+        - course-controller
       operationId: modifyCourse
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       requestBody:
         content:
           application/json:
@@ -25,29 +25,29 @@ paths:
               $ref: '#/components/schemas/CourseDto'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/CourseDto'
   /api/courses:
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: getAllCourses
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/CourseDto'
     post:
       tags:
-      - course-controller
+        - course-controller
       operationId: createCourse
       requestBody:
         content:
@@ -56,54 +56,54 @@ paths:
               $ref: '#/components/schemas/CourseDto'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/CourseDto'
-  /api/courses/{id}/versions:
+  '/api/courses/{id}/versions':
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: getVersionAt
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: at
-        in: query
-        required: true
-        schema:
-          type: string
-          format: date-time
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: at
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/CourseDto'
-  /api/courses/{id}/history:
+  '/api/courses/{id}/history':
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: getCourseHistoryById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 type: array
                 items:
@@ -111,29 +111,55 @@ paths:
   /api/courses/search:
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: search
       parameters:
-      - name: predicate
-        in: query
-        required: true
-        schema:
-          $ref: '#/components/schemas/Predicate'
-      - name: full
-        in: query
-        required: false
-        schema:
-          type: boolean
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: '#/components/schemas/Pageable'
+        - name: full
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - schema:
+            type: integer
+          in: query
+          name: id
+        - schema:
+            type: string
+          in: query
+          name: name
+        - schema:
+            type: string
+          in: query
+          name: teachers.name
+        - schema:
+            type: string
+          in: query
+          name: students.id
+        - schema:
+            type: array
+            items:
+              type: integer
+          in: query
+          name: students.semester
+        - schema:
+            type: integer
+          in: query
+          name: page
+        - schema:
+            type: integer
+          in: query
+          name: size
+        - schema:
+            type: array
+            items:
+              type: string
+          in: query
+          name: sort
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 type: array
                 items:
@@ -183,41 +209,12 @@ components:
         revisionType:
           type: string
           enum:
-          - ADD
-          - MOD
-          - DEL
+            - ADD
+            - MOD
+            - DEL
         revision:
           type: integer
           format: int32
         date:
           type: string
           format: date-time
-    Predicate:
-      type: object
-    Pageable:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int64
-        sort:
-          $ref: '#/components/schemas/Sort'
-        pageSize:
-          type: integer
-          format: int32
-        pageNumber:
-          type: integer
-          format: int32
-        unpaged:
-          type: boolean
-        paged:
-          type: boolean
-    Sort:
-      type: object
-      properties:
-        empty:
-          type: boolean
-        sorted:
-          type: boolean
-        unsorted:
-          type: boolean

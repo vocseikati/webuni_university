@@ -1,7 +1,7 @@
 package katka.university.mapper;
 
+import hu.webuni.university.api.model.CourseDto;
 import java.util.List;
-import katka.university.dtos.CourseDto;
 import katka.university.entities.Course;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
