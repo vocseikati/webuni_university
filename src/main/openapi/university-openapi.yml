@@ -164,6 +164,51 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CourseDto'
+  '/api/students/{id}/profile':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    post:
+      tags:
+        - student-controller
+      summary: uploadImageForStudent
+      operationId: uploadProfilePictureForStudent
+      responses: {}
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  format: binary
+        description: ''
+    get:
+      tags:
+        - student-controller
+      summary: ''
+      operationId: getProfilePicture
+      responses:
+        '200':
+          description: OK
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+    delete:
+      summary: ''
+      operationId: deleteProfilePicture
+      responses:
+        '200':
+          description: OK
+      description: ''
+      tags:
+        - student-controller
 components:
   schemas:
     CourseDto:
