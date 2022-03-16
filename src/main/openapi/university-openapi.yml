@@ -209,6 +209,13 @@ paths:
       description: ''
       tags:
         - student-controller
+  /api/reports:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - report-controller
+      responses: {}
+      operationId: showSemesterReport
 components:
   schemas:
     CourseDto:
