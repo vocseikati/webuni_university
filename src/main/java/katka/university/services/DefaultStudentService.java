@@ -79,6 +79,7 @@ public class DefaultStudentService implements StudentService {
 
   @Override
   public void saveProfilePicture(Integer id, MultipartFile content) {
+    getStudent(id);
     try {
       InputStream inputStream = content.getInputStream();
       Files.copy(inputStream, getPath(id), StandardCopyOption.REPLACE_EXISTING);
