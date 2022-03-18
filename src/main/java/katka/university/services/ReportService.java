@@ -1,9 +1,6 @@
 package katka.university.services;
 
-import hu.webuni.university.api.model.CourseStatisticDto;
-import java.util.ArrayList;
 import java.util.List;
-import katka.university.entities.Course;
 import katka.university.entities.CourseStatistic;
 import katka.university.repositories.CourseRepository;
 import lombok.RequiredArgsConstructor;

@@ -209,6 +209,22 @@ paths:
       description: ''
       tags:
         - student-controller
+  /api/chat:
+    put:
+      summary: ''
+      operationId: onChatMessage
+      responses:
+        '200':
+          description: OK
+      tags:
+        - chat-controller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessage'
+            examples: {}
+        description: ''
 components:
   schemas:
     CourseDto:
@@ -263,3 +279,14 @@ components:
         date:
           type: string
           format: date-time
+    ChatMessage:
+      title: ChatMessage
+      type: object
+      properties:
+        sender:
+          type: string
+        courseId:
+          type: number
+        text:
+          type: string
+  requestBodies: {}

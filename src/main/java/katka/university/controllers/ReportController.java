@@ -2,7 +2,6 @@ package katka.university.controllers;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import katka.university.entities.Course;
 import katka.university.entities.CourseStatistic;
 import katka.university.services.ReportService;
 import lombok.RequiredArgsConstructor;
