@@ -1,12 +1,11 @@
 package katka.university.entities;
 
-import lombok.Data;
+public interface CourseStatistic {
 
-@Data
-public class CourseStatistic {
+  int getCourseId();
 
-  private int courseId;
-  private String courseName;
-  private double averageSemesterOfStudents;
+  String getCourseName();
+
+  double getAverageSemesterOfStudents();
 
 }

@@ -21,7 +21,7 @@ public class StudentController implements StudentControllerApi {
   }
 
   @Override
-  public ResponseEntity<Void> uploadProfilePictureForStudent(Integer id, MultipartFile content) {
+  public ResponseEntity<Void> uploadProfilePictureForStudent(Integer id, MultipartFile content) { //@Valid kell a contenthez?
     studentService.saveProfilePicture(id, content);
     return ResponseEntity.ok().build();
   }

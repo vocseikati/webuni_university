@@ -26,13 +26,15 @@ public class Student extends Person {
   @ManyToMany(mappedBy = "students")
   private Set<Course> courses;
 
-  @Builder
-  public Student(int id, String name, LocalDate birthdate, int semester) {
-    super(id, name, birthdate);
-    this.semester = semester;
-  }
-
   private Integer educationalId;
+
   private Integer freeSemesterNumber;
 
+  @Builder
+  public Student(int id, String name, LocalDate birthdate, int semester, int educationalId, int freeSemesterNumber) {
+    super(id, name, birthdate);
+    this.semester = semester;
+    this.educationalId = educationalId;
+    this.freeSemesterNumber = freeSemesterNumber;
+  }
 }

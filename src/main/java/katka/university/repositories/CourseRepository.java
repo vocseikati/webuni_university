@@ -5,9 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import katka.university.entities.Course;
+import katka.university.entities.CourseStatistic;
 import katka.university.entities.QCourse;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
@@ -37,5 +39,7 @@ public interface CourseRepository
     }));
   }
 
+  @Query("SELECT c.id AS courseId, c.name AS courseName, AVG(s.semester) AS averageSemesterOfStudents FROM Course c LEFT JOIN c.students s GROUP BY c")
+  List<CourseStatistic> getCourseStatistic();
 
 }

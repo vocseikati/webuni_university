@@ -35,7 +35,7 @@ public class InitDbService {
   }
 
   @Transactional
-  public void deleteAudTables(){
+  public void deleteAudTables() {
     jdbcTemplate.update("DELETE FROM course_aud");
     jdbcTemplate.update("DELETE FROM course_students_aud");
     jdbcTemplate.update("DELETE FROM course_teachers_aud");
@@ -46,9 +46,9 @@ public class InitDbService {
 
   @Transactional
   public void addInitData() {
-    Student student1 = saveNewStudent(LocalDate.of(2000, 10, 10),"student1",  1);
-    Student student2 = saveNewStudent(LocalDate.of(2000, 10, 10),"student2",  2);
-    Student student3 = saveNewStudent(LocalDate.of(2000, 10, 10), "student3", 3);
+    Student student1 = saveNewStudent(LocalDate.of(2000, 10, 10), "student1", 1, 111, 1);
+    Student student2 = saveNewStudent(LocalDate.of(2000, 10, 10), "student2", 2, 222, 2);
+    Student student3 = saveNewStudent(LocalDate.of(2000, 10, 10), "student3", 3, 333, 3);
 
     Teacher teacher1 = saveNewTeacher("teacher1", LocalDate.of(2000, 10, 10));
     Teacher teacher2 = saveNewTeacher("teacher2", LocalDate.of(2000, 10, 10));
@@ -69,12 +69,15 @@ public class InitDbService {
             .build());
   }
 
-  private Student saveNewStudent(LocalDate birthdate, String name, int semester) {
+  private Student saveNewStudent(LocalDate birthdate, String name, int semester, int educationalId,
+                                 int freeSemesterNumber) {
     return studentRepository.save(
         Student.builder()
             .birthdate(birthdate)
             .name(name)
             .semester(semester)
+            .educationalId(educationalId)
+            .freeSemesterNumber(freeSemesterNumber)
             .build());
   }
 
