@@ -225,6 +225,14 @@ paths:
               $ref: '#/components/schemas/ChatMessage'
             examples: {}
         description: ''
+  /api/students/:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: getAllStudents
 components:
   schemas:
     CourseDto:
@@ -254,6 +262,8 @@ components:
         semester:
           type: integer
           format: int32
+        balance:
+          type: integer
     TeacherDto:
       type: object
       properties:

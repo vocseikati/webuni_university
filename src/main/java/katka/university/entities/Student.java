@@ -30,6 +30,8 @@ public class Student extends Person {
 
   private Integer freeSemesterNumber;
 
+  private int balance;
+
   @Builder
   public Student(int id, String name, LocalDate birthdate, int semester, int educationalId, int freeSemesterNumber) {
     super(id, name, birthdate);

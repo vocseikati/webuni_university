@@ -12,4 +12,6 @@ public interface StudentService {
   void saveProfilePicture(Integer id, MultipartFile content);
 
   void deleteProfilePicture(Integer id);
+
+  void updateBalance(int studentId, int amount);
 }
